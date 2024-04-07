@@ -1,6 +1,7 @@
 import json
 import requests
 from jsonschema import validate
+from resource import path
 
 
 def test_return_single_user():
@@ -8,9 +9,10 @@ def test_return_single_user():
         url="https://reqres.in/api/users/3"
     )
     body = response.json()
+    schema = path('get_method.json')
 
     assert response.status_code == 200
-    with open('../json_schemas/get_method.json') as file:
+    with open(schema) as file:
         f = file.read()
         validate(body, schema=json.loads(f))
 
